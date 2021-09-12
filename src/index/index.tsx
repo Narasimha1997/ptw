@@ -1,8 +1,10 @@
 import { Component, h, render } from "preact";
+import sayHello from '../utils/hello';
 
 class App extends Component {
     render() {
-        return <h2>Hello World</h2>
+        const helloString = sayHello("Narasimha");
+        return <h2>{helloString}</h2>
     }
 }
 
