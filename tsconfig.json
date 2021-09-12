@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        // main
+        "outDir": "dist/js",
+        "target": "es5",
+        "module": "commonjs",
+        // preact configuration
+        "jsx": "react",
+        "jsxFactory": "h",
+        // others:
+        "removeComments": true,
+        "sourceMap": true,
+        "noImplicitAny": false
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.tsx",
+    ]
+}
