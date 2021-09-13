@@ -32,11 +32,11 @@ module.exports = {
     devtool: "eval",
     module: {
         rules: [
-            { test: /\.tsx?$/, loader: "ts-loader" }
+            { test: /\.tsx?$/, exclude: /(node_modules)/, loader: "ts-loader" },
         ],
     },
     resolve: {
-        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+        extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".json"]
     },
     plugins: [
         new CopyPlugin({
