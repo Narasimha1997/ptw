@@ -1,32 +1,10 @@
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
-const fsExtra = require('fs-extra');
-const process = require('process');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const OUTPUT_DIRECTORY = path.join(__dirname, "dist", "js")
 const SOURCE_DIRECTORY = path.join(__dirname, "src")
-
-// prepare the dist directory if not exist:
-const initDist = () => {
-    try {
-        const distPath = path.join(__dirname, 'dist');
-        const webPath = path.join(__dirname, 'web');
-
-        if (fs.existsSync(distPath)) {
-            fs.rmSync(distPath, { recursive: true, force: true });
-        }
-
-        fs.mkdirSync(distPath);
-        // copy all the web folder to distPath
-        fsExtra.copySync(webPath, distPath);
-        fs.mkdirSync(OUTPUT_DIRECTORY);
-
-    } catch (err) {
-        console.log(err);
-        process.exit(-1);
-    }
-}
 
 const getEntryPoints = () => {
 
@@ -44,10 +22,6 @@ const getEntryPoints = () => {
     return entries;
 }
 
-// Run initDist
-initDist();
-console.log("Initialized dist/");
-
 module.exports = {
     mode: "production",
     entry: getEntryPoints(),
@@ -63,5 +37,15 @@ module.exports = {
     },
     resolve: {
         extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
-    }
+    },
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: path.join(__dirname, "web"),
+                    to: path.join(__dirname, "dist")
+                }
+            ]
+        })
+    ]
 }
