@@ -12,10 +12,11 @@
         "sourceMap": true,
         "noImplicitAny": false,
         "resolveJsonModule": true,
-        "esModuleInterop": true,
+        "esModuleInterop": true
     },
     "include": [
         "./src/**/*.ts",
         "./src/**/*.tsx",
+        "./typings.d.ts",
     ]
 }
