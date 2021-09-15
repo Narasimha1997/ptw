@@ -85,9 +85,10 @@ src/
         - index.tsx
         - some_file.tsx
         - some_file_2.tsx
-        - some_file.img
-        - some_other_file.css
-        - some_wasm_file.wasm
+        - banner.jpg
+        - style_1.css
+        - style_2.css
+        - fib.wasm
         - ....
     - about/
         - index.tsx
@@ -99,3 +100,54 @@ src/
         - some_other_util_file.ts
         ....
 ```
+In the example above, `index/` and `about/` are web-modules. i.e they have an `index.tsx` file. They are compiled and bundled as a separate JavaScript file. The `utils/` is a non-web module, it can be commonly used by any other module, they dont produce any bundle seperately. We can organize the `web/` folder accordingly:
+
+```
+web/
+    - index.html
+    - about.html
+```
+
+After build, the generated folder layout in dist will be:
+```
+dist/
+    - js/
+        - index.js
+        - about.js
+    - assets/
+        - banner.jpg
+        - index.css
+        - fib.wasm
+    - index.html
+    - about.html
+```
+
+You can look at `web/` for html examples. Here is sample `web/index.html` page:
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Hello World</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="assets/index.css">
+</head>
+
+<body>
+    <div id="root">
+    </div>
+    <script src='js/index.js'></script>
+</body>
+
+</html>
+```
+We have to make sure the script src is pointing to `js/index.js` and stylesheet to `assets/index.css`.
+
+#### CSS loading
+The boilerplate can generate load and bundle css files as well. The css file is generated one per web module. In the above example, `style_1.css` and `style_2.css` are bundled together in `index.css` file.
+
+
+### Contributing
+If you wish to contribute, feel free to raise any issues, make pull requests or suggest changes.
