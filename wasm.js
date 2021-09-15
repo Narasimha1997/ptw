@@ -11,7 +11,7 @@ const defaults = {
 
 const WASM_COMPILE_WRAP = "async () => {" +
     "try {" +
-    "return module = await WebAssembly.compileStreaming(" +
+    "return await WebAssembly.compileStreaming(" +
     "    fetch({???}) " +
     ");" +
     "} catch (err) { throw err; }";
