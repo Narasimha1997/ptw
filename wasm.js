@@ -10,21 +10,28 @@ const defaults = {
 }
 
 const WASM_COMPILE_WRAP = "async () => {" +
-    "const instance = await WebAssembly.compileStreaming(" +
+    "try {" +
+    "return module = await WebAssembly.compileStreaming(" +
     "    fetch({???}) " +
-    ");return instance;}";
+    ");" +
+    "} catch (err) { throw err; }";
+"}";
 
 const WASM_INSTANCE_WRAP = "async () => {" +
-    "const instance = await WebAssembly.instantiateStreaming(" +
+    "try {" +
+    "const res = await WebAssembly.instantiateStreaming(" +
     "    fetch({???}) " +
-    ");return instance;}";
+    ");" +
+    "return res.instance.exports;" +
+    "} catch (err) { throw err; }" +
+    "}";
 
 const panic = (msg, callback) => {
     if (!callback) {
         throw new Error(msg);
+    } else {
+        callback(new Error(msg));
     }
-
-    callback(msg);
 }
 
 // Taken from: https://github.com/webpack-contrib/file-loader/blob/master/src/utils.js

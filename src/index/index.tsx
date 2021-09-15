@@ -9,9 +9,8 @@ import factModule from './factorial.wasm';
 class App extends Component {
 
     render() {
-        factModule().then((res) => {
-            const exports = res.instance.exports;
-            console.log(exports._Z4facti(10));
+        factModule().then((instance) => {
+            console.log(instance._Z4facti(10));
         }).catch((err) => {
             console.log(err);
         })
