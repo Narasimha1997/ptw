@@ -7,10 +7,13 @@ import sts from './image.css'
 class App extends Component {
     render() {
         const helloString = sayHello(data.name);
-        console.log(sts)
         return <div className={sts.myImage}> 
             <h3>{helloString}</h3>
             <img src={helloWorld}></img>
+            <div className={sts.mP}>
+                <p>I am awesome!!!</p>
+            </div>
+            <a href="/about.html">Go to about!</a>
         </div>
     }
 }

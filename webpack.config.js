@@ -1,6 +1,8 @@
-const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
+const process = require('process');
+
+const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssPlugin = require('mini-css-extract-plugin');
 
@@ -23,14 +25,12 @@ const getEntryPoints = () => {
     return entries;
 }
 
-module.exports = {
-    mode: "production",
+const config = {
     entry: getEntryPoints(),
     output: {
         path: path.resolve(OUTPUT_DIRECTORY),
         filename: path.join('js', '[name].js')
     },
-    devtool: 'eval',
     module: {
         rules: [
             { test: /\.tsx?$/, loader: 'ts-loader' },
@@ -73,4 +73,25 @@ module.exports = {
             filename: path.join('assets', '[name].css')
         })
     ]
+}
+
+if (process.env.MODE === 'dev') {
+    const devMode = {
+        mode: 'development',
+        devtool: 'inline-source-map',
+        devServer: {
+            static: 'dist',
+        }
+    }
+
+    module.exports = Object.assign(
+        {}, devMode, config
+    )
+
+} else {
+    module.exports = Object.assign(
+        {},
+        { mode: 'production', devtool: 'eval' },
+        config
+    )
 }
