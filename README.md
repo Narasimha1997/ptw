@@ -37,7 +37,7 @@ npm run build
 This will create the build at `dist/` folder.
 
 ## Custom Web Assembly plugin:
-For loading Web Assembly, we have built a custom webpack loader (See `wasm.js`), the loader copies all the `.wasm` files to `dist/assets` and generates a wrapper code that loads web-assembly using streaming technique, in traditional web assembly compilation, the entire `wasm` binary is loaded into a memory buffer and then compiled, which results in memory overhead, so this method is not practically feseable for loading large web assembly binaries on devices with low memory. The traditional approach of lading wasm files in web frontend is to bundle it as a buffer in a minified JavaScript file, this results in the large file, if this file is not chunked then on low bandwidth networks, the file download may take long time and this might block the main thread from rendering the UI. The `fetch` approach used in this loader will generate a `fetch` call while wrapping which will get executed asynchronously by the browser while it can still load, render and hydrate the UI at the same time.
+For loading Web Assembly, we have built a custom webpack loader (See `wasm.js`), the loader copies all the `.wasm` files to `dist/assets` and generates a wrapper code that loads web-assembly using streaming technique, in traditional web assembly compilation, the entire `wasm` binary is loaded into a memory buffer and then compiled, which results in memory overhead, so this method is not practically feseable for loading large web assembly binaries on devices with low memory. The traditional approach of loading wasm files in web frontend is to bundle it as a buffer in a minified JavaScript file, this results in the large file, if this file is not chunked then on low bandwidth networks the file download may take long time and this might block the main thread from rendering the UI. The `fetch` approach used in this loader will generate a `fetch` call while wrapping which will get executed asynchronously by the browser while it can still load, render and hydrate the UI at the same time.
 
 ### Configuring the loader:
 The loader provides following options:
@@ -81,7 +81,7 @@ The wasm files can be imported as follows:
 
 1. When `compileOnly: false` (i.e instance is produced directly)
 ```js
-import factLoader from './factorial.wasm`;
+import factLoader from './factorial.wasm';
 
 ....
 
