@@ -54,11 +54,25 @@ const config = {
                     'sass-loader',
                     'postcss-loader',
                 ]
+            },
+            {
+                test: /\.wasm$/,
+                use: [
+                    {
+                        loader: path.resolve('./wasm.js'),
+                        options: {
+                            targetPath: 'assets',
+                            targetName: '[name].[ext]'
+                        }
+                    }
+                ]
             }
         ],
     },
     resolve: {
-        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.json', '.css', '.sass']
+        extensions: [
+            '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.json', '.css', '.sass', '.wasm'
+        ]
     },
     plugins: [
         new CopyPlugin({

@@ -1,14 +1,13 @@
 const { loader } = require('webpack');
 const { getOptions, interpolateName } = require('loader-utils');
-const fs = require('fs');
 const path = require('path');
 
 const defaults = {
-    targetPath: path.join('assets'),
-    targetName: '[name].[ext]',
+    targetPath: 'assets',
+    targetName: '[contenthash].wasm',
+    compileOnly: false,
     esModule: true,
 }
-
 
 const panic = (msg, callback) => {
     if (!callback) {
@@ -80,8 +79,51 @@ const emitTarget = (ctx, source, options, outputPath) => {
     ctx.emitFile(outputPath, source, null, fileInfo);
 }
 
-module.exports.loader = (source) => {
-    const options = getOptions(this) || defaults;
+const parseOptions = (options) => {
+    const parsedOptions = {}
+    Object.keys(defaults).forEach((key) => {
+        if (typeof options[key] === 'undefined') {
+            parsedOptions[key] = defaults[key];
+        } else {
+            parsedOptions[key] = options[key];
+        }
+    });
+
+    return parsedOptions;
+}
+
+/*
+    wraps in a function that returns a module after streaming compilation
+*/
+const wrapModuleCompile = (binaryPath) => {
+
+    const urlBinaryPath = JSON.stringify(
+        binaryPath.startsWith('/') ? binaryPath : '/' + binaryPath
+    );
+
+    return "async () => {" +
+        "const instance = await WebAssembly.compileStreaming(" +
+        "    fetch({???}) " +
+        ");return instance;}".replace("{???}", urlBinaryPath);
+}
+
+/*
+    wraps in a function that returns a module after streaming compilation and instantiation.
+*/
+const wrapModuleInstance = (binaryPath) => {
+
+    const urlBinaryPath = JSON.stringify(
+        binaryPath.startsWith('/') ? binaryPath : '/' + binaryPath
+    );
+
+    return "async () => {" +
+        "const instance = await WebAssembly.instantiateStreaming(" +
+        "    fetch({???}) " +
+        ");return instance;}".replace("{???}", urlBinaryPath);
+}
+
+module.exports = function loader(source) {
+    const options = parseOptions(getOptions(this) || {});
 
     // validate the wasm file:
     if (!WebAssembly.validate(source)) {
@@ -97,18 +139,23 @@ module.exports.loader = (source) => {
         }
     );
 
-    const outputPath = path.posix.join(options.targetPath, outputName);
 
+    const outputPath = path.posix.join(options.targetPath, outputName);
     // emit the file to target destination.
+
     if (this.emitFile) {
         emitTarget(this, source, options, outputPath)
     }
 
     // export the JavaScript module:
-    // TODO: Wrap in a container, now just emit the string for testing
+
+    const wrappedLoader = (options.compileOnly) ?
+        wrapModuleCompile(outputPath) :
+        wrapModuleInstance(outputPath)
+
     return (
-        !options.esModule ? 'module.exports = ' + outputPath :
-                'export default ' + outputPath
+        !options.esModule ? 'module.exports = ' + wrappedLoader :
+            'export default ' + wrappedLoader
     )
 }
 

@@ -3,9 +3,11 @@ import sayHello from '../utils/hello';
 import data from './data.json';
 import helloWorld from './test.jpg';
 import sts from './image.css'
+import factModule from './factorial.wasm';
 
 class App extends Component {
     render() {
+        console.log('Wasm module path: ', factModule);
         const helloString = sayHello(data.name);
         return <div className={sts.myImage}> 
             <h3>{helloString}</h3>
