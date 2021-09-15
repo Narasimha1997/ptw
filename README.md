@@ -76,6 +76,52 @@ We can just modify the loader options in `webpack.config.js` file. Here is an ex
     }
 ```
 
+### Importing and using WASM files:
+The wasm files can be imported as follows:
+
+1. When `compileOnly: false` (i.e instance is produced directly)
+```js
+import factLoader from './factorial.wasm`;
+
+....
+
+// in the place you want to use:
+
+const factInstance = await factLoader();
+// assume that there is a function exported called `_Z4facti(int)`, then:
+const result = factInstance._Z4facti(10);
+console.log(result);
+
+```
+
+2. When `compileOnly: true` (i.e a compiled module is produced)
+```js
+import factLoader from './factorial.wasm';
+
+....
+
+// in the place you want to use:
+const factModule = await factLoader();
+const factInstance = await WebAssembly.instantiate(factModule);
+
+// now you can access the exported functions:
+const result = factInstance.exports._Z4facti(10);
+console.log(result);
+
+```
+
+You can also use `then()-catch()` style:
+```js
+....
+
+factLoader().then((modOrInst) => {
+    ....
+}).catch((err) => {
+    ....
+});
+
+```
+
 ### Multiple Web pages:
 The boilerplate is designed to handle multiple web pages within the same site. The `src` is organized like this (just an example):
 
