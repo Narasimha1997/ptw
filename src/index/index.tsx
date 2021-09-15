@@ -5,9 +5,17 @@ import helloWorld from './test.jpg';
 import sts from './image.css'
 import factModule from './factorial.wasm';
 
+
 class App extends Component {
+
     render() {
-        console.log('Wasm module path: ', factModule);
+        factModule().then((res) => {
+            const exports = res.instance.exports;
+            console.log(exports._Z4facti(10));
+        }).catch((err) => {
+            console.log(err);
+        })
+
         const helloString = sayHello(data.name);
         return <div className={sts.myImage}> 
             <h3>{helloString}</h3>

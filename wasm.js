@@ -9,6 +9,16 @@ const defaults = {
     esModule: true,
 }
 
+const WASM_COMPILE_WRAP = "async () => {" +
+    "const instance = await WebAssembly.compileStreaming(" +
+    "    fetch({???}) " +
+    ");return instance;}";
+
+const WASM_INSTANCE_WRAP = "async () => {" +
+    "const instance = await WebAssembly.instantiateStreaming(" +
+    "    fetch({???}) " +
+    ");return instance;}";
+
 const panic = (msg, callback) => {
     if (!callback) {
         throw new Error(msg);
@@ -101,10 +111,7 @@ const wrapModuleCompile = (binaryPath) => {
         binaryPath.startsWith('/') ? binaryPath : '/' + binaryPath
     );
 
-    return "async () => {" +
-        "const instance = await WebAssembly.compileStreaming(" +
-        "    fetch({???}) " +
-        ");return instance;}".replace("{???}", urlBinaryPath);
+    return WASM_COMPILE_WRAP.replace("{???}", urlBinaryPath);
 }
 
 /*
@@ -116,10 +123,7 @@ const wrapModuleInstance = (binaryPath) => {
         binaryPath.startsWith('/') ? binaryPath : '/' + binaryPath
     );
 
-    return "async () => {" +
-        "const instance = await WebAssembly.instantiateStreaming(" +
-        "    fetch({???}) " +
-        ");return instance;}".replace("{???}", urlBinaryPath);
+    return WASM_INSTANCE_WRAP.replace("{???}", urlBinaryPath);
 }
 
 module.exports = function loader(source) {
