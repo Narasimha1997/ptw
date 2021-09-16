@@ -1,0 +1,8 @@
+.mainContainer {
+    border: 5px solid red;
+}
+
+.outerContainer {
+    text-align: center;
+    padding-top: 100px;
+}
