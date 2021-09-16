@@ -196,12 +196,12 @@ The boilerplate can generate load and bundle css files as well. The css file is 
 
 
 ### Acknowledgements:
-1. `factorial.wasm` binary file was taken from (https://github.com/ballercat/wasm-loader)[here].
-2. (https://github.com/DrSensor/webassembly-loader)[wasm-loader] - Acted as a tutorial for building my own plugin.
-3. (https://webpack.js.org/)[webpack] - Core of this project.
-4. (https://preactjs.com/)[Preact] - The light weight alternative to React.
-5. (https://www.typescriptlang.org/)[TypeScript] - JavaScript with compile-time type safety.
-6. (https://github.com/webpack-contrib/file-loader)[file-loader] - Function `normalizePath` was taken from this repo.
+1. `factorial.wasm` binary file was taken from [here](https://github.com/ballercat/wasm-loader).
+2. [wasm-loader](https://github.com/DrSensor/webassembly-loader) - Acted as a tutorial for building my own plugin.
+3. [webpack](https://webpack.js.org/) - Core of this project.
+4. [Preact](https://preactjs.com/) - The light weight alternative to React.
+5. [TypeScript](https://www.typescriptlang.org/) - JavaScript with compile-time type safety.
+6. [file-loader](https://github.com/webpack-contrib/file-loader) - Function `normalizePath` was taken from this repo.
 
 ### Contributing
 If you wish to contribute, feel free to raise any issues, make pull requests or suggest changes.
