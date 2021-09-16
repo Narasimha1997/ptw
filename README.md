@@ -1,14 +1,14 @@
 # ptw
 A minimal boilerplate for building frontends using Preact, TypeScript and Web Assembly.
 
-The main focus of PTW is to provide a boilerplate code that focuses on providing    type-safety (TypeScript), light-weight rendering (Preact) and simple to use Web Assembly integration and bundling (using a custom-built webpack loader) while providing ability to develop a modular multi-page web application.
+PTW focuses on providing type-safety (TypeScript), light-weight rendering (Preact) and simple to use Web Assembly integration and bundling (using a custom webpack loader, check `./wasm.js`) while providing ability to develop a modular multi-page web application.
 
 ### Features:
 * Fully functional TypeScript and PReact support.
+* Asynchronous-Streaming Web Assembly Loading, Compilation and Instantiation.
 * Load and bundle CSS, SASS, JSON, JPEG, PNG, GIF, SVG, MP3, MP4 assets.
 * Development Server with hot reloading upon changes.
-* Asynchronous streaming Web Assembly Compilation and Instantiation.
-* Automatic TypeScript types generation for CSS classes.
+* Automatic types generation for CSS classes.
 
 ### Getting started:
 1. Clone the repository:
