@@ -195,5 +195,13 @@ We have to make sure the script src is pointing to `js/index.js` and stylesheet 
 The boilerplate can generate load and bundle css files as well. The css file is generated one per web module. In the above example, `style_1.css` and `style_2.css` are bundled together in `index.css` file.
 
 
+### Acknowledgements:
+1. `factorial.wasm` binary file was taken from (https://github.com/ballercat/wasm-loader)[here].
+2. (https://github.com/DrSensor/webassembly-loader)[wasm-loader] - Acted as a tutorial for building my own plugin.
+3. (https://webpack.js.org/)[webpack] - Core of this project.
+4. (https://preactjs.com/)[Preact] - The light weight alternative to React.
+5. (https://www.typescriptlang.org/)[TypeScript] - JavaScript with compile-time type safety.
+6. (https://github.com/webpack-contrib/file-loader)[file-loader] - Function `normalizePath` was taken from this repo.
+
 ### Contributing
 If you wish to contribute, feel free to raise any issues, make pull requests or suggest changes.
